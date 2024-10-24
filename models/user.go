@@ -1,27 +1,29 @@
-package main
+package models
 
 import (
 	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 )
 
 type UserItem struct {
-	Index       int           `json:"Index"`
+	ID          int           `json:"id"`
 	FirstName   string        `json:"firstName"`
 	LastName    string        `json:"lastName"`
-	Age         int           `json:"age"`
+	BirthDate   time.Time     `json:"birthDate"`
 	PhoneNumber string        `json:"phoneNumber"`
 	Field       WorkFieldItem `json:"field"`
-	WonBefore   bool          `json:"wonBefore"`
+	HasWon      bool          `json:"hasWon"`
+	WinningDate time.Time     `json:"winningDate"`
 }
 
 func (u UserItem) String() string {
-	return fmt.Sprintf("%v)\t%v\t%v\t%v\t%v\t%v\t%v", u.Index, u.FirstName, u.LastName, u.Age, u.PhoneNumber, u.Field, u.WonBefore)
+	return fmt.Sprintf("%v)\t%v\t%v\t%v\t%v\t%v\t%v\t%v", u.ID, u.FirstName, u.LastName, u.BirthDate.Format("2006-01-02"), u.PhoneNumber, u.Field, u.HasWon, u.WinningDate.Format("2006-01-02"))
 }
 
-func saveToFile(users []UserItem, filename string) error {
+func SaveToFile(users []UserItem, filename string) error {
 	f, err := os.Create(filename)
 	if err != nil {
 		return err
@@ -38,7 +40,7 @@ func saveToFile(users []UserItem, filename string) error {
 	return nil
 }
 
-func loadFromFile(filename string) ([]UserItem, error) {
+func LoadFromFile(filename string) ([]UserItem, error) {
 	var users []UserItem
 	f, err := os.Open(filename)
 	if err != nil {
