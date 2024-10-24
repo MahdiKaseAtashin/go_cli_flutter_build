@@ -1,13 +1,11 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+
+*/
 package main
 
-import (
-	"fmt"
-	"lottery/cmd"
-	"lottery/models"
-)
+import "lottery/cmd"
 
 func main() {
-	users, _ := models.LoadFromFile("users.txt")
-	fmt.Println(users)
 	cmd.Execute()
 }
